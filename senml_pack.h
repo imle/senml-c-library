@@ -19,6 +19,8 @@
     #include <string> 
     using namespace std;
     #define String string
+#else
+    #include <Arduino.h>
 #endif
 
 #include <senml_base.h>
