@@ -1,0 +1,19 @@
+{
+  "name": "senml",
+  "version": "1.0.1",
+  "description": "The KPN SenML library helps you create and parse senml documents in both json and cbor format.",
+  "authors": {
+    {
+        "name": "KPN IoT"
+    },
+    {
+        "name": "Steven Imle",
+        "email": "steven@imle.io",
+        "maintainer": true
+    }
+  },
+  "dependencies": {
+    "base64": "*"
+  },
+  "url": "https://github.com/imle/senml-c-library",
+}
