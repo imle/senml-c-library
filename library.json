@@ -1,5 +1,5 @@
 {
-  "name": "senml",
+  "name": "SenML",
   "version": "1.0.1",
   "description": "The KPN SenML library helps you create and parse senml documents in both json and cbor format.",
   "authors": [
