@@ -11,7 +11,7 @@
         "email": "steven@imle.io",
         "maintainer": true
     }
-  ]
+  ],
   "dependencies": {
     "base64": "*"
   },
