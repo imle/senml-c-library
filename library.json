@@ -13,7 +13,7 @@
     }
   ],
   "dependencies": {
-    "base64": "*"
+    "1910": "*"
   },
   "url": "https://github.com/imle/senml-c-library",
 }
