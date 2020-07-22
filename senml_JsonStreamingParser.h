@@ -27,14 +27,17 @@ See more at http://blog.squix.ch and https://github.com/squix78/json-streaming-p
 #define SENMLJSONSTREAMINGPARSER
 
 #ifdef __MBED__
-    #include "mbed.h"
-    #include <string> 
-    using namespace std;
-    #define String string
+#include "mbed.h"
+#include <string>
+using namespace std;
+#define String string
 #else
-    #include <Arduino.h>
+#include <Arduino.h>
+
+
 #endif
 #include <senml_JsonListener.h>
+
 
 #define STATE_START_DOCUMENT     0
 #define STATE_DONE               -1
@@ -63,84 +66,83 @@ See more at http://blog.squix.ch and https://github.com/squix78/json-streaming-p
  * Internal helper class for parsing json data.
  */
 class JsonStreamingParser {
-    public:
-        JsonStreamingParser();
-        void parse(char c);
-        void setListener(JsonListener* listener);
-        void reset();
+ public:
+  JsonStreamingParser();
+  void parse(char c);
+  void setListener(JsonListener *listener);
+  void reset();
 
+ private:
 
-    private:
+  int state;
+  int stack[20];
+  int stackPos;
+  JsonListener *myListener;
 
-        int state;
-        int stack[20];
-        int stackPos;
-        JsonListener* myListener;
+  //bool doEmitWhitespace = false;
+  // fixed length buffer array to prepare for c code
+  char buffer[BUFFER_MAX_LENGTH];
+  int bufferPos;
 
-        //bool doEmitWhitespace = false;
-        // fixed length buffer array to prepare for c code
-        char buffer[BUFFER_MAX_LENGTH];
-        int bufferPos;
+  char unicodeEscapeBuffer[10];
+  int unicodeEscapeBufferPos;
 
-        char unicodeEscapeBuffer[10];
-        int unicodeEscapeBufferPos;
+  char unicodeBuffer[10];
+  int unicodeBufferPos;
 
-        char unicodeBuffer[10];
-        int unicodeBufferPos;
+  int characterCounter;
 
-        int characterCounter;
+  int unicodeHighSurrogate;
 
-        int unicodeHighSurrogate;
+  void increaseBufferPointer();
 
-        void increaseBufferPointer();
+  void endString();
 
-        void endString();
+  void endArray();
 
-        void endArray();
+  void startValue(char c);
 
-        void startValue(char c);
+  void startKey();
 
-        void startKey();
+  void processEscapeCharacters(char c);
 
-        void processEscapeCharacters(char c);
+  bool isDigit(char c);
 
-        bool isDigit(char c);
+  bool isHexCharacter(char c);
 
-        bool isHexCharacter(char c);
+  char convertCodepointToCharacter(int num);
 
-        char convertCodepointToCharacter(int num);
+  void endUnicodeCharacter(int codepoint);
 
-        void endUnicodeCharacter(int codepoint);
+  void startNumber(char c);
 
-        void startNumber(char c);
+  void startString();
 
-        void startString();
+  void startObject();
 
-        void startObject();
+  void startArray();
 
-        void startArray();
+  void endNull();
 
-        void endNull();
+  void endFalse();
 
-        void endFalse();
+  void endTrue();
 
-        void endTrue();
+  void endDocument();
 
-        void endDocument();
+  int convertDecimalBufferToInt(char myArray[], int length);
 
-        int convertDecimalBufferToInt(char myArray[], int length);
+  void endNumber();
 
-        void endNumber();
+  void endUnicodeSurrogateInterstitial();
 
-        void endUnicodeSurrogateInterstitial();
+  bool doesCharArrayContain(char myArray[], int length, char c);
 
-        bool doesCharArrayContain(char myArray[], int length, char c);
+  int getHexArrayAsDecimal(char hexArray[], int length);
 
-        int getHexArrayAsDecimal(char hexArray[], int length);
+  void processUnicodeCharacter(char c);
 
-        void processUnicodeCharacter(char c);
-
-        void endObject();
+  void endObject();
 };
 
 #endif

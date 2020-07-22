@@ -17,50 +17,44 @@
 #include <senml_pack.h>
 
 
-SenMLBase::SenMLBase(): _prev(NULL), _next(NULL)
-{
+SenMLBase::SenMLBase() : _prev(NULL), _next(NULL) {
 }
 
-SenMLBase::~SenMLBase()
-{
-    if(this->_prev)
-        this->_prev->setNext(this->_next);
-    if(this->_next)
-        this->_next->setPrev(this->_prev);
-    
+SenMLBase::~SenMLBase() {
+  if (this->_prev)
+    this->_prev->setNext(this->_next);
+  if (this->_next)
+    this->_next->setPrev(this->_prev);
 }
 
-void SenMLBase::setNext(SenMLBase* value)
-{
-    if(value == NULL){                                              //if next becomes null and there is a root, then this object became the last in the list, so let the root know.
-        SenMLPack* root = (SenMLPack*)this->getRoot();
-        if(root)
-            root->setLast(this);
-    }
-    this->_next = value;
+void SenMLBase::setNext(SenMLBase *value) {
+  //if next becomes null and there is a root, then this object became the last in the list, so let the root know.
+  if (value == NULL) {
+    SenMLPack * root = (SenMLPack *) this->getRoot();
+    if (root)
+      root->setLast(this);
+  }
+  this->_next = value;
 }
 
- void SenMLBase::setPrev(SenMLBase* value)
- {
-     this->_prev = value;
- }
-
-SenMLBase* SenMLBase::getPrev()
-{
-    return this->_prev;
+void SenMLBase::setPrev(SenMLBase *value) {
+  this->_prev = value;
 }
 
-SenMLBase* SenMLBase::getRoot()
-{
-    SenMLBase* prev = this->_prev;
-    while(prev){
-        SenMLBase* newPrev = prev->getPrev();
-        if(newPrev == NULL)
-            return prev;
-        else
-            prev = newPrev;
-    }
-    return this;                                    //if there was no first prev, it means we are root.
+SenMLBase *SenMLBase::getPrev() {
+  return this->_prev;
+}
+
+SenMLBase *SenMLBase::getRoot() {
+  SenMLBase *prev = this->_prev;
+  while (prev) {
+    SenMLBase *newPrev = prev->getPrev();
+    if (newPrev == NULL)
+      return prev;
+    else
+      prev = newPrev;
+  }
+  return this;                                    //if there was no first prev, it means we are root.
 }
 
 

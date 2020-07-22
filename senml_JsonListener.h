@@ -27,38 +27,40 @@ See more at http://blog.squix.ch and https://github.com/squix78/json-streaming-p
 #define SENMLJSONLISTENER
 
 #ifdef __MBED__
-    #include "mbed.h"
-    #include <string> 
-    using namespace std;
-    #define String string
+#include "mbed.h"
+#include <string>
+using namespace std;
+#define String string
 #else
-    #include <Arduino.h>
+#include <Arduino.h>
+
+
 #endif
 
 /**
  * Internal helper class for parsing json data.
  */
 class JsonListener {
-  private:
+ private:
 
-  public:
-      
-    //virtual void startDocument() = 0;
+ public:
 
-    virtual void key(String key) = 0;
+  //virtual void startDocument() = 0;
 
-    virtual void value(String value) = 0;
+  virtual void key(String key) = 0;
 
-    //virtual void endArray() = 0;
+  virtual void value(String value) = 0;
 
-    //virtual void endObject() = 0;
+  //virtual void endArray() = 0;
 
-    //virtual void endDocument() = 0;
+  //virtual void endObject() = 0;
 
-    //virtual void startArray() = 0;
+  //virtual void endDocument() = 0;
 
-    //virtual void startObject() = 0;
- 
+  //virtual void startArray() = 0;
+
+  //virtual void startObject() = 0;
+
 };
 
 #endif

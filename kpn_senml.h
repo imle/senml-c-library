@@ -36,8 +36,6 @@
 #include <senml_bool_actuator.h>
 #include <senml_binary_actuator.h>
 
-#include <cbor.h>
-
 
 #endif // KML_SENML
 

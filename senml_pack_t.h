@@ -16,62 +16,82 @@
 
 #include <senml_pack.h>
 
+
 /**
  * A template class that can be used to create new SenMLPack types that store a base-value and/or base-sum 
  * with a basic data type (no structs or classes).
  * When you create a new class, you should always implement the following functions in order
- * for the new class to operate correctly: fieldsToJson() and fieldsToCbor(). These functions are responsible
+ * for the new class to operate correctly: fieldsToJson(). These functions are responsible
  * for rendering both base-value and base-sum. This class does not implement any rendering.
  * See previous implementations such as SenMLIntPack for inspiration.
- */ 
-template <class T>
-class SenMLPackTemplate: public SenMLPack
-{
-    public:
+ */
+template<class T>
+class SenMLPackTemplate : public SenMLPack {
+ public:
 
-        SenMLPackTemplate(const char* baseName): SenMLPack(baseName, SENML_UNIT_NONE, NAN) {};
-        SenMLPackTemplate(const char* baseName, SenMLUnit baseUnit): SenMLPack(baseName, baseUnit, NAN) {};
-        SenMLPackTemplate(const char* baseName, SenMLUnit baseUnit, double baseTime): SenMLPack(baseName, baseUnit, baseTime) {};
+  SenMLPackTemplate(const char *baseName) : SenMLPack(baseName, SENML_UNIT_NONE, NAN) {};
 
-        SenMLPackTemplate(PACK_ACTUATOR_SIGNATURE): SenMLPack("", SENML_UNIT_NONE, NAN, callback) {};
-        SenMLPackTemplate(const char* baseName, PACK_ACTUATOR_SIGNATURE): SenMLPack(baseName, SENML_UNIT_NONE, NAN, callback) {};
-        SenMLPackTemplate(const char* baseName, SenMLUnit baseUnit, PACK_ACTUATOR_SIGNATURE): SenMLPack(baseName, baseUnit, NAN, callback) {};
-        SenMLPackTemplate(const char* baseName, SenMLUnit baseUnit, double baseTime, PACK_ACTUATOR_SIGNATURE): SenMLPack(baseName, baseUnit, baseTime, callback){};
+  SenMLPackTemplate(const char *baseName, SenMLUnit baseUnit) : SenMLPack(baseName, baseUnit, NAN) {};
 
+  SenMLPackTemplate(const char *baseName, SenMLUnit baseUnit, double baseTime) : SenMLPack(baseName,
+                                                                                           baseUnit,
+                                                                                           baseTime) {};
 
+  SenMLPackTemplate(PACK_ACTUATOR_SIGNATURE) : SenMLPack("", SENML_UNIT_NONE, NAN, callback) {};
 
-        ~SenMLPackTemplate(){};
+  SenMLPackTemplate(const char *baseName, PACK_ACTUATOR_SIGNATURE) : SenMLPack(baseName,
+                                                                               SENML_UNIT_NONE,
+                                                                               NAN,
+                                                                               callback) {};
 
-        /**
-         * Get the base-sum assigned to this pack object.
-         * @returns: the base-sum.
-         */
-        T getBaseSum() {return _sum; } ;
+  SenMLPackTemplate(const char *baseName, SenMLUnit baseUnit, PACK_ACTUATOR_SIGNATURE) : SenMLPack(baseName,
+                                                                                                   baseUnit,
+                                                                                                   NAN,
+                                                                                                   callback) {};
 
-        /**
-         * Store the base-sum in the pack object.
-         * @returns: true (returns a value to support possible future extentions)
-         */
-        bool setBaseSum(T value) {_sum = value; return true;};
+  SenMLPackTemplate(const char *baseName, SenMLUnit baseUnit, double baseTime, PACK_ACTUATOR_SIGNATURE) : SenMLPack(
+      baseName,
+      baseUnit,
+      baseTime,
+      callback) {};
 
-        /**
-         * Get the base-value assigned to this pack object.
-         * @returns: the base-value.
-         */
-        T getBaseValue() {return _value; } ;
+  ~SenMLPackTemplate() {};
 
-        /**
-         * Store the base-value in the pack object.
-         * @returns: true (returns a value to support possible future extentions)
-         */
-        bool setBaseValue(T value) {_value = value; return true;};
+  /**
+   * Get the base-sum assigned to this pack object.
+   * @returns: the base-sum.
+   */
+  T getBaseSum() { return _sum; };
 
-protected:
+  /**
+   * Store the base-sum in the pack object.
+   * @returns: true (returns a value to support possible future extentions)
+   */
+  bool setBaseSum(T value) {
+    _sum = value;
+    return true;
+  };
 
+  /**
+   * Get the base-value assigned to this pack object.
+   * @returns: the base-value.
+   */
+  T getBaseValue() { return _value; };
 
-private:
-    T _sum;
-    T _value;
+  /**
+   * Store the base-value in the pack object.
+   * @returns: true (returns a value to support possible future extentions)
+   */
+  bool setBaseValue(T value) {
+    _value = value;
+    return true;
+  };
+
+ protected:
+
+ private:
+  T _sum;
+  T _value;
 };
 
 #endif // SENMLPACKTEMPLATE
